@@ -13,6 +13,7 @@
     ],
     'assets': {
         'point_of_sale.assets': [
+            'soycalidad/static/src/js/models.js',
             'soycalidad/static/src/xml/**/*',
         ],
     },
