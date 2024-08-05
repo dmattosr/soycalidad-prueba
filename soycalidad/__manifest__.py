@@ -14,6 +14,7 @@
     ],
     'data': [
         'reports/report_invoice.xml',
+        'views/account_move_view.xml',
     ],
     'qweb': [
         'static/src/xml/pos_boleta_button.xml',

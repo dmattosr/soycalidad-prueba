@@ -3,10 +3,37 @@ import base64
 import qrcode
 import io
 
+separators = ['/', '-']
+
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    x_series_number = fields.Char(string="Número de serie", compute="_compute_series_number")
+    x_correlative_number = fields.Char(string="Número correlativo", compute="_compute_correlative_number")
+
     x_qr_invoice = fields.Binary(string="QR Code", compute="_compute_qr_code")
+
+    @api.depends('name')
+    def _compute_series_number(self):
+        for record in self:
+            if record.name:
+                for key in separators:
+                    if key in record.name:
+                        parts = record.name.split(key)
+                        if len(parts) > 2:
+                            record.x_series_number = ''.join(parts[:-2])
+                        else:
+                            record.x_series_number = parts[0]
+                        break
+
+    @api.depends('name')
+    def _compute_correlative_number(self):
+        for record in self:
+            if record.name:
+                for key in separators:
+                    if key in record.name:
+                        record.x_correlative_number = record.name.split(key)[-1].zfill(8)
+                        break
 
     def generate_qr_code(self, qr_string):
         qr = qrcode.QRCode(version=4, box_size=4, border=1)
