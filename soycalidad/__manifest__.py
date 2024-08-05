@@ -1,5 +1,5 @@
 {
-    'name': "Prueba Tecnica-SOyCalidad",
+    'name': "Prueba Técnica - SoyCalidad",
 
     'summary': """
         Prueba Técnica
@@ -29,4 +29,5 @@
             'soycalidad/static/src/xml/**/*',
         ],
     },
+    'application': True,
 }

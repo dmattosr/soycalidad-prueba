@@ -16,10 +16,10 @@ class SaleChannel(models.Model):
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
-    x_series_number = fields.Char(string="Número de serie", compute="_compute_series_number")
-    x_correlative_number = fields.Char(string="Número correlativo", compute="_compute_correlative_number")
+    x_series_number = fields.Char(string='Número de serie', compute='_compute_series_number')
+    x_correlative_number = fields.Char(string='Número correlativo', compute='_compute_correlative_number')
 
-    x_qr_invoice = fields.Binary(string="QR Code", compute="_compute_qr_code")
+    x_qr_invoice = fields.Binary(string='QR Code', compute='_compute_qr_code')
     sale_channel_id = fields.Many2one('sale.channel', string='Canal de ventas')
     invoice_date_issue = fields.Datetime(string='Fecha de emisión')
     x_picking_ids = fields.Many2many('stock.picking', string='Related Pickings', compute='_compute_x_picking_ids')
@@ -52,14 +52,14 @@ class AccountMove(models.Model):
         qr.make(fit=True)
         img = qr.make_image()
         buffer = io.BytesIO()
-        img.save(buffer, format="PNG")
+        img.save(buffer, format='PNG')
         img_str = base64.b64encode(buffer.getvalue())
         return {'x_qr_invoice': img_str}
 
     @api.depends('name', 'invoice_date', 'partner_id', 'amount_total', 'invoice_line_ids')
     def _compute_qr_code(self):
         for record in self:
-            x_qr_invoice = "{}|{}|{}|{}|{}".format(
+            x_qr_invoice = '{}|{}|{}|{}|{}'.format(
                 record.name,
                 record.partner_id.name,
                 record.invoice_date,
@@ -68,8 +68,6 @@ class AccountMove(models.Model):
             )
             record.update(self.generate_qr_code(x_qr_invoice))
 
-    # @api.depends('line_ids.sale_line_ids.order_id')
     def _compute_x_picking_ids(self):
         for record in self:
             record.x_picking_ids = self.line_ids.sale_line_ids.order_id.picking_ids
-            # source_orders = self.line_ids.sale_line_ids.order_id
