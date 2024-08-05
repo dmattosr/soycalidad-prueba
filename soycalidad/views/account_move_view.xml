@@ -12,6 +12,9 @@
                     </group>
                 </group>
             </xpath>
+            <xpath expr="//field[@name='invoice_user_id']" position="after">
+                <field name="sale_channel_id"/>
+            </xpath>
         </field>
     </record>
 </odoo>

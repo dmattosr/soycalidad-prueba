@@ -5,6 +5,14 @@ import io
 
 separators = ['/', '-']
 
+
+class SaleChannel(models.Model):
+    _name = 'sale.channel'
+    _description = 'Canal de ventas'
+
+    name = fields.Char(string='Nombre del canal', required=True)
+
+
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
@@ -12,6 +20,7 @@ class AccountMove(models.Model):
     x_correlative_number = fields.Char(string="Número correlativo", compute="_compute_correlative_number")
 
     x_qr_invoice = fields.Binary(string="QR Code", compute="_compute_qr_code")
+    sale_channel_id = fields.Many2one('sale.channel', string='Canal de ventas')
 
     @api.depends('name')
     def _compute_series_number(self):

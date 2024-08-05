@@ -13,6 +13,8 @@
         'point_of_sale',
     ],
     'data': [
+        'security/ir.model.access.csv',
+        'data/sale_channel.xml',
         'reports/report_invoice.xml',
         'views/account_move_view.xml',
     ],
