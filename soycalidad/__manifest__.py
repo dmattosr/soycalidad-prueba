@@ -9,7 +9,11 @@
     'version': '0.1',
     'license': 'LGPL-3',
     'depends': [
+        'account',
         'point_of_sale',
+    ],
+    'data': [
+        'reports/report_invoice.xml',
     ],
     'qweb': [
         'static/src/xml/pos_boleta_button.xml',

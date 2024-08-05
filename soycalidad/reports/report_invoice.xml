@@ -1,0 +1,9 @@
+<odoo>
+    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='qrcode']" position="after">
+            <div style="text-align: center;" t-if="o.x_qr_invoice">
+                <img class="border border-dark rounded" t-attf-src="data:image/png;base64,{{o.x_qr_invoice}}"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
