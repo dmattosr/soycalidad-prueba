@@ -21,6 +21,7 @@ class AccountMove(models.Model):
 
     x_qr_invoice = fields.Binary(string="QR Code", compute="_compute_qr_code")
     sale_channel_id = fields.Many2one('sale.channel', string='Canal de ventas')
+    invoice_date_issue = fields.Datetime(string='Fecha de emisión')
 
     @api.depends('name')
     def _compute_series_number(self):
