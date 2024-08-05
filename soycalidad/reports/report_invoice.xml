@@ -1,5 +1,32 @@
 <odoo>
     <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='informations']" position="before">
+            <div id="informations" class="row mt-4 mb-4">
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Número de serie:</strong>
+                    <p class="m-0" t-field="o.x_series_number"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Número correlativo:</strong>
+                    <p class="m-0" t-field="o.x_correlative_number"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Canal de ventas:</strong>
+                    <p class="m-0" t-field="o.sale_channel_id"/>
+                </div>
+            </div>
+        </xpath>
+        <!-- Fecha de emisión -->
+        <xpath expr="//div[@id='informations']/div[1]/t[1]/strong" position="replace">            
+            <strong>Fecha de emisión:</strong>
+        </xpath>
+        <xpath expr="//p[@t-field='o.invoice_date']" position="attributes">            
+            <attribute name="t-if">o.move_type != 'out_invoice'</attribute>
+        </xpath>
+        <xpath expr="//p[@t-field='o.invoice_date']" position="after">            
+            <p class="m-0" t-field="o.invoice_date_issue" t-if="o.move_type == 'out_invoice'"/>
+        </xpath>
+        <!-- QR -->
         <xpath expr="//div[@id='qrcode']" position="after">
             <div style="text-align: center;" t-if="o.x_qr_invoice">
                 <img class="border border-dark rounded" t-attf-src="data:image/png;base64,{{o.x_qr_invoice}}"/>
