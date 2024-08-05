@@ -22,6 +22,7 @@ class AccountMove(models.Model):
     x_qr_invoice = fields.Binary(string="QR Code", compute="_compute_qr_code")
     sale_channel_id = fields.Many2one('sale.channel', string='Canal de ventas')
     invoice_date_issue = fields.Datetime(string='Fecha de emisión')
+    x_picking_ids = fields.Many2many('stock.picking', string='Related Pickings', compute='_compute_x_picking_ids')
 
     @api.depends('name')
     def _compute_series_number(self):
@@ -66,3 +67,9 @@ class AccountMove(models.Model):
                 record.amount_total
             )
             record.update(self.generate_qr_code(x_qr_invoice))
+
+    # @api.depends('line_ids.sale_line_ids.order_id')
+    def _compute_x_picking_ids(self):
+        for record in self:
+            record.x_picking_ids = self.line_ids.sale_line_ids.order_id.picking_ids
+            # source_orders = self.line_ids.sale_line_ids.order_id

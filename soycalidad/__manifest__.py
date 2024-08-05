@@ -10,6 +10,7 @@
     'license': 'LGPL-3',
     'depends': [
         'account',
+        'sale_management',
         'point_of_sale',
     ],
     'data': [
